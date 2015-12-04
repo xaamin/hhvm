@@ -6,7 +6,7 @@ MAINTAINER "Benjamín Martínez Mateos" <bmxamin@gmail.com>
 RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0x5a16e7281be7a449 \
     && add-apt-repository "deb http://dl.hhvm.com/ubuntu $(lsb_release -sc) main" \
     && apt-get -y update \
-    && DEBIAN_FRONTEND=noninteractive apt-get -y install hhvm \
+    && DEBIAN_FRONTEND=noninteractive apt-get -y install hhvm libfcgi0ldbl \
     && /usr/bin/update-alternatives --install /usr/bin/php php /usr/bin/hhvm 60 \
 
     # Remove temp files
