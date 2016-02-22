@@ -1,4 +1,4 @@
-FROM xaamin/php
+FROM xaamin/php-cli
 
 MAINTAINER "Benjamín Martínez Mateos" <bmxamin@gmail.com>
 
@@ -23,12 +23,12 @@ ENV DATE_TIMEZONE America/Mexico_City
 # does not stop script execution for some reason. A value of '0' means 'off'.
 # Available units: s(econds)(default), m(inutes), h(ours), or d(ays)
 # (www.conf)
-ENV REQUEST_TIMEOUT 30
+ENV REQUEST_TIMEOUT 60
 
 # Maximum amount of time each script may spend parsing request data. It's a good
 # idea to limit this time on productions servers in order to eliminate unexpectedly
 # long running scripts.
-ENV MAX_INPUT_TIME 30
+ENV MAX_INPUT_TIME 60
 
 # Maximum amount of memory a script may consume (128MB)
 ENV MEMORY_LIMIT 128M
@@ -37,16 +37,16 @@ ENV MEMORY_LIMIT 128M
 ENV POST_MAX_SIZE 30M
 
 # Add bootstrap file
-ADD start.bash /start.bash
+ADD start.sh /start.sh
 
 # Add supervisor config file
 ADD supervisord.conf /etc/supervisor/supervisord.conf
 
 # Define mountable directories
-VOLUME ["/data"]
+VOLUME ["/shared"]
 
 # Port 9000 is how Nginx will communicate with PHP-FPM.
 EXPOSE 9000
 
 # Run startup script.
-CMD ["/bin/bash", "/start.bash"]
+CMD ["/bin/bash", "/start.sh"]
